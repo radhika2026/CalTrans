@@ -1,10 +1,8 @@
 from datetime import datetime
 
-def adjust_time_parameters(start_time, end_time):
-    start_time_str = datetime.utcfromtimestamp(start_time).strftime('%m/%d/%Y %H:%M')
-    end_time_str = datetime.utcfromtimestamp(end_time).strftime('%m/%d/%Y %H:%M')
-
-    encoded_start_time_str = start_time_str.replace('/', '%2F').replace(' ', '+').replace(':', '%3A')
-    encoded_end_time_str = end_time_str.replace('/', '%2F').replace(' ', '+').replace(':', '%3A')
-
-    return encoded_start_time_str, encoded_end_time_str
+def adjust_time_parameters(timestamp):
+            if isinstance(timestamp, int):  # Check if timestamp is Unix timestamp
+                time_str = datetime.utcfromtimestamp(timestamp).strftime('%m/%d/%Y %H:%M')
+            else:  
+                time_str = timestamp
+            return time_str.replace('/', '%2F').replace(' ', '+').replace(':', '%3A')

@@ -20,12 +20,17 @@ class API():
         session.cookies = response.cookies
         return session
         
+
     def generate_query(self, station_id, start_time, end_time, dnode='VDS', content='loops', tab='det_timeseries',
-                    export='text', q='vmt', gn='hour', tod='all', tod_from=0, tod_to=0,
-                    dow=[1, 1, 1, 1, 1, 1, 1], holidays='on', q2=''):
+                        export='text', q='vmt', gn='hour', tod='all', tod_from=0, tod_to=0,
+                        dow=[1, 1, 1, 1, 1, 1, 1], holidays='on', q2=''):
         
-        start_time_encoded, end_time_encoded = adjust_time_parameters(start_time, end_time)
-        dow_values = ''.join('&dow_' + str(i) + '=on' for i in range(len(dow)))
+
+        start_time_encoded = adjust_time_parameters(start_time)
+        end_time_encoded = adjust_time_parameters(end_time)
+
+        dow_values = ''.join(f'&dow_{i}=on' for i in range(len(dow)))
+
         parameters =  f"report_form=1"\
             f"&station_id={station_id}"\
             f"&dnode={dnode}"\
@@ -42,6 +47,7 @@ class API():
             f"&q2={q2}"
         
         return parameters
+
 
 
     def pull_data(self, parameters):
